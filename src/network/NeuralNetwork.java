@@ -1,13 +1,13 @@
 package network;
 
-import activation.Activation;
-import matrix.Linear;
 import activation.Sigmoid;
+import matrix.Linear;
+import matrix.Operations;
 
 public class NeuralNetwork implements Network {
 
     private double[][][] theta;
-    private Activation activation;
+    private Sigmoid activation;
 
     /**
      * @param inputs the number of input neurons
@@ -16,6 +16,10 @@ public class NeuralNetwork implements Network {
      * @param outputs the number of output neurons
      */
     public NeuralNetwork (int inputs, int hidden, int hiddenSize, int outputs) {
+        this();
+    }
+
+    public NeuralNetwork () {
         this.activation = new Sigmoid();
     }
 
@@ -53,5 +57,29 @@ public class NeuralNetwork implements Network {
     @Override
     public double[][] error () {
         throw new UnsupportedOperationException();
+    }
+
+    public void train(double[] input, double[] expected) {
+        double[][] out = forwardPropogate(input);
+        double[] observed = Operations.last(out);
+
+        // Calculate Total Error
+        double totalError = 0;
+        for (int i=0; i<observed.length; i++) {
+            double t = input[i] - expected[i];
+            totalError += t * t;
+        }
+        totalError /= 2;
+
+        // d etotal / d out
+        double[] outputError1 = new double[observed.length];
+        for (int i=0; i<observed.length; i++)
+            outputError1[i] = observed[i] - expected[i];
+
+        // d out o1 / d net o1
+        double[] outputError2 = activation.apply(Linear.apply(Operations.last(theta), out[out.length - 2]));
+
+        // dout o1 / d net o1
+        double[] outputError3 =
     }
 }
