@@ -26,7 +26,7 @@ public class LogisticCostFunction implements CostFunction {
         for (int i = 0; i < X.length; i++)
             for (int j = 0; j < X[i].length; j++)
                 for (int k = 1; k < X[i][j].length; k++) // do not regularize constant term
-                    sum += Math.pow(X[i][k][k], 2);
+                    sum += Math.pow(X[i][j][k], 2);
         return sum;
     }
 }
