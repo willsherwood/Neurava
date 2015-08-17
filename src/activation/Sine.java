@@ -1,8 +1,8 @@
 package activation;
 
-import java.util.function.Function;
+import java.util.function.DoubleFunction;
 
-public class Sine implements Activation, Differentiable<Double> {
+public class Sine implements Activation, Differentiable {
 
     @Override
     public double activate (double z) {
@@ -10,7 +10,7 @@ public class Sine implements Activation, Differentiable<Double> {
     }
 
     @Override
-    public Function<Double, Double> derivative () {
+    public DoubleFunction<Double> derivative () {
         return a -> Math.cos(a) / 2;
     }
 

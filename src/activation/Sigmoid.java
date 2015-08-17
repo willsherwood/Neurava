@@ -1,8 +1,8 @@
 package activation;
 
-import java.util.function.Function;
+import java.util.function.DoubleFunction;
 
-public class Sigmoid implements Activation, Differentiable<Double> {
+public class Sigmoid implements Activation, Differentiable {
 
     @Override
     public double activate (double z) {
@@ -10,7 +10,7 @@ public class Sigmoid implements Activation, Differentiable<Double> {
     }
 
     @Override
-    public Function<Double, Double> derivative () {
+    public DoubleFunction<Double> derivative () {
         return a -> {
             double partial = 1 + Math.exp(-a);
             return (-partial + 1) / Math.pow(partial, 2);
