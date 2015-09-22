@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class ColoredNetworkVisualizer extends Stage {
@@ -63,7 +64,7 @@ public abstract class ColoredNetworkVisualizer extends Stage {
         Pane root = new StackPane();
         root.getChildren().add(new ImageView(image));
         try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", new File("A:/newnets/" + hashCode() + ".png"));
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", new File("C:/newnets/" + hashCode() + ".png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

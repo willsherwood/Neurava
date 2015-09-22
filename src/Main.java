@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import matrix.Operations;
 import network.Network;
+import network.NeuralNetwork;
 import network.RandomNetworkFactory;
 import statistics.StandardDeviation;
 import tests.ColoredNetworkVisualizer;
@@ -18,21 +19,10 @@ public class Main extends Application {
 
     @Override
     public void start (Stage primaryStage) throws Exception {
-//        final Network theta = new RandomNetworkFactory().create(5.2, 2, 30, 20, 3);
-//        final Network theta = choose(8, 40, 40, 1000);
-        final Network theta = NetworkIO.loadNetwork(new File("A:/newnets/253317999.obj"));
-        ColoredNetworkVisualizer visualizer = new ColoredNetworkVisualizer() {
-            @Override
-            protected Network network () {
-                return theta;
-            }
-        };
-        System.out.println(rating(theta, 3));
-        primaryStage.setScene(new Scene(visualizer.image(), 1024, 1024));
-        primaryStage.show();
-        NetworkIO.saveNetwork(theta, new File("A:/newnets/" + visualizer.hashCode() + ".obj"));
+        final Network theta = new RandomNetworkFactory().create(10, 1, 20, 20, 1);
         System.out.println("done");
-        System.out.println(rating(theta, 16));
+        ((NeuralNetwork) theta).train(new double[]{0}, new double[]{1});
+
     }
 
     private Network choose (double ep, int A, int B, int iterations) {

@@ -1,12 +1,18 @@
 package network;
 
+import activation.Activation;
 import activation.Sigmoid;
+import activation.Sine;
+import logistic.LogisticCostFunction;
 import matrix.Linear;
+import matrix.Operations;
+
+import java.util.Arrays;
 
 public class NeuralNetwork implements Network {
 
     private double[][][] theta;
-    private Sigmoid activation;
+    private Activation activation;
 
     /**
      * @param inputs the number of input neurons
@@ -59,6 +65,25 @@ public class NeuralNetwork implements Network {
     }
 
     public void train(double[] input, double[] expected) {
+        for (int i=0; i<input.length; i++) {
+            train(input[i], expected[i]);
+        }
+    }
+
+    private void train(double X, double Y) {
+        double cost = Math.pow(Y - Operations.last(forwardPropogate(new double[]{X}))[0], 2);
+        System.out.println(cost);
+        for (int i=0; i<16; i++)
+            for (int j=0; j<theta.length; j++)
+                for (int k=0; k<theta[j].length; k++)
+                    for (int l=0; l<theta[j][k].length; l++) {
+                        double save = theta[j][k][l];
+                        theta[j][k][l] = Math.random();
+                        double cost2 = Math.pow(Y - Operations.last(forwardPropogate(new double[]{X}))[0], 2);
+                        if (cost2 > cost)
+                            theta[j][k][l] = save;
+                    }
+        System.out.println(Math.pow(Y - Operations.last(forwardPropogate(new double[]{X}))[0], 2));
 
     }
 }
